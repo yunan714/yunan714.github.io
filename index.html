@@ -372,6 +372,185 @@
   
   
   <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/19/nlp-task-metric/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="尹恒">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yh's blog">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">
+                
+                
+                <a href="/2019/07/19/nlp-task-metric/" class="post-title-link" itemprop="url">nlp task metric</a>
+              
+            
+          </h1>
+        
+
+        <div class="post-meta">
+
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-19 14:55:28 / 修改时间：15:13:22" itemprop="dateCreated datePublished" datetime="2019-07-19T14:55:28+08:00">2019-07-19</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/自然语言处理/" itemprop="url" rel="index"><span itemprop="name">自然语言处理</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        
+          
+            <h2 id="BELU"><a href="#BELU" class="headerlink" title="BELU"></a>BELU</h2><p>belu是机器翻译领域的指标，公式如下：<br>$$<br>B L E U=B P \cdot \exp \left(\sum_{n=1}^{N} w_{n} \log P_{n}\right)<br>$$</p>
+<p>$$<br>B P=\left{\begin{array}{ll}{1} &amp; {\text { if } c&gt;r} \ {e^{1-r / c}} &amp; {\text { if } c \leq r}\end{array}\right.<br>$$</p>
+<p>这个指标具体是如何运算的呢？</p>
+<p>列子：</p>
+<p>候选译文（Predicted）：<br>It is a guide to action which ensures that the military always obeys the commands of the party</p>
+<p>参考译文（Gold Standard）<br>1：It is a guide to action that ensures that the military will forever heed Party commands<br>2：It is the guiding principle which guarantees the military forces always being under the command of the Party<br>3：It is the practical guide for the army always to heed the directions of the party</p>
+<p>首先计算$P_n$,若$n=4$，我们需要从$1gram$一直计算到$4gram$。$ngram$的计算方法是，对于候选译文中<strong>每个出现的n元组</strong>，统计其次数。对于每个三元组，定义max值为候选译文和参考译文中的最大值，定义min为候选译文和参考译文（除去最小的那个）的最小值。</p>
+<p>最后将每个n元组的min值相加之和除以每个n元组的候选译文出现个数相加，得到的值即为$P_n$。</p>
+<p>$w_i$为对应的$ngram$的权重，将所有$P_n$加权求和再取指数，最后乘上一个长度惩罚系数$BP$即可得到最终的belu值。</p>
+<p>$BP$系数会惩罚过短的句子，它会自动得寻找尽可能跟标准翻译长度相近似的句子。</p>
+
+          
+        
+      
+    </div>
+
+    
+
+    
+
+    
+    
+    
+
+    <div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+
+      
+
+      
+
+      
+      
+        <div class="post-eof"></div>
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+    
+      
+
+  
+
+  
+  
+  
+
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
     <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/19/MCMC-1-Monte-Carlo-Method/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -417,7 +596,7 @@
                 
               
 
-              <time title="创建时间：2019-07-19 10:45:22 / 修改时间：11:57:53" itemprop="dateCreated datePublished" datetime="2019-07-19T10:45:22+08:00">2019-07-19</time>
+              <time title="创建时间：2019-07-19 10:45:22 / 修改时间：14:55:56" itemprop="dateCreated datePublished" datetime="2019-07-19T10:45:22+08:00">2019-07-19</time>
             </span>
           
 
@@ -589,7 +768,7 @@
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">1</span>
+          <span class="site-state-item-count">2</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -608,7 +787,9 @@
         
           
         
-        <span class="site-state-item-count">1</span>
+          
+        
+        <span class="site-state-item-count">2</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -631,7 +812,11 @@
         
           
         
-        <span class="site-state-item-count">1</span>
+          
+        
+          
+        
+        <span class="site-state-item-count">5</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -1174,6 +1359,8 @@
     
       
         
+      
+    
       
     
   
