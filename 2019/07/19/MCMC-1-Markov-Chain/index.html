@@ -93,13 +93,20 @@
   };
 </script>
 
-  <meta property="og:type" content="website">
-<meta property="og:title" content="yh&#39;s blog">
-<meta property="og:url" content="http://yoursite.com/tags/机器学习/index.html">
+  <meta name="description" content="马尔科夫链概述马尔科夫链假设每一个时间步$t$的状态$X_t$的状态仅依赖于上一个时间步的状态$X_{t-1}$。用公式表达就是：$$P\left(X_{t+1} | \ldots X_{t-2}, X_{t-1}, X_{t}\right)=P\left(X_{t+1} | X_{t}\right)$$对于一个马尔科夫链来说，只要我们能够求出任意两个状态之间的转换概率，那么随着马尔科夫链的不断迭">
+<meta name="keywords" content="机器学习,统计">
+<meta property="og:type" content="article">
+<meta property="og:title" content="MCMC-1-Markov-Chain">
+<meta property="og:url" content="http://yoursite.com/2019/07/19/MCMC-1-Markov-Chain/index.html">
 <meta property="og:site_name" content="yh&#39;s blog">
+<meta property="og:description" content="马尔科夫链概述马尔科夫链假设每一个时间步$t$的状态$X_t$的状态仅依赖于上一个时间步的状态$X_{t-1}$。用公式表达就是：$$P\left(X_{t+1} | \ldots X_{t-2}, X_{t-1}, X_{t}\right)=P\left(X_{t+1} | X_{t}\right)$$对于一个马尔科夫链来说，只要我们能够求出任意两个状态之间的转换概率，那么随着马尔科夫链的不断迭">
 <meta property="og:locale" content="zh-CN">
+<meta property="og:image" content="http://yoursite.com/2019/07/19/MCMC-1-Markov-Chain/Markov_Chain.png">
+<meta property="og:updated_time" content="2019-07-19T14:48:02.858Z">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="yh&#39;s blog">
+<meta name="twitter:title" content="MCMC-1-Markov-Chain">
+<meta name="twitter:description" content="马尔科夫链概述马尔科夫链假设每一个时间步$t$的状态$X_t$的状态仅依赖于上一个时间步的状态$X_{t-1}$。用公式表达就是：$$P\left(X_{t+1} | \ldots X_{t-2}, X_{t-1}, X_{t}\right)=P\left(X_{t+1} | X_{t}\right)$$对于一个马尔科夫链来说，只要我们能够求出任意两个状态之间的转换概率，那么随着马尔科夫链的不断迭">
+<meta name="twitter:image" content="http://yoursite.com/2019/07/19/MCMC-1-Markov-Chain/Markov_Chain.png">
 
 
 
@@ -107,7 +114,7 @@
 
   
   
-  <link rel="canonical" href="http://yoursite.com/tags/机器学习/">
+  <link rel="canonical" href="http://yoursite.com/2019/07/19/MCMC-1-Markov-Chain/">
 
 
 
@@ -118,7 +125,7 @@
 </script>
 
   
-  <title>标签: 机器学习 | yh's blog</title>
+  <title>MCMC-1-Markov-Chain | yh's blog</title>
   
 
 
@@ -166,7 +173,7 @@
     
   
 
-  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left ">
+  <!-- hexo-inject:begin --><!-- hexo-inject:end --><div class="container sidebar-position-left page-post-detail">
     <div class="headband"></div>
     <a href="https://your-url" class="github-corner" aria-label="View source on GitHub"><svg width="80" height="80" viewbox="0 0 250 250" style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;" aria-hidden="true"><path d="M0,0 L115,115 L130,115 L142,142 L250,250 L250,0 Z"/><path d="M128.3,109.0 C113.8,99.7 119.0,89.6 119.0,89.6 C122.0,82.7 120.5,78.6 120.5,78.6 C119.2,72.0 123.4,76.3 123.4,76.3 C127.3,80.9 125.5,87.3 125.5,87.3 C122.9,97.6 130.6,101.9 134.4,103.2" fill="currentColor" style="transform-origin: 130px 106px;" class="octo-arm"/><path d="M115.0,115.0 C114.9,115.1 118.7,116.5 119.8,115.4 L133.7,101.6 C136.9,99.2 139.9,98.4 142.2,98.6 C133.8,88.0 127.5,74.4 143.8,58.0 C148.5,53.4 154.0,51.2 159.7,51.0 C160.3,49.4 163.2,43.6 171.4,40.1 C171.4,40.1 176.1,42.5 178.8,56.2 C183.1,58.6 187.2,61.8 190.9,65.4 C194.5,69.0 197.7,73.2 200.1,77.6 C213.8,80.2 216.3,84.9 216.3,84.9 C212.7,93.1 206.9,96.0 205.4,96.6 C205.1,102.4 203.0,107.8 198.3,112.5 C181.9,128.9 168.3,122.5 157.7,114.1 C157.9,116.9 156.7,120.9 152.7,124.9 L141.0,136.5 C139.8,137.7 141.6,141.9 141.8,141.8 Z" fill="currentColor" class="octo-body"/></svg></a><style>.github-corner:hover .octo-arm{animation:octocat-wave 560ms ease-in-out}@keyframes octocat-wave{0%,100%{transform:rotate(0)}20%,60%{transform:rotate(-25deg)}40%,80%{transform:rotate(10deg)}}@media (max-width:500px){.github-corner:hover .octo-arm{animation:none}.github-corner .octo-arm{animation:octocat-wave 560ms ease-in-out}}</style>
 
@@ -237,7 +244,7 @@
         
         
           
-          <li class="menu-item menu-item-tags menu-item-active">
+          <li class="menu-item menu-item-tags">
 
     
     
@@ -351,112 +358,229 @@
           
             
 
-    
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-      
-      
-    
-    
-
-  
-
-
           
           <div id="content" class="content">
             
 
-  
-  
-  
-  <div class="post-block tag">
+  <div id="posts" class="posts-expand">
+    
 
-    <div id="posts" class="posts-collapse">
-      <div class="collection-title">
-        <h1>机器学习<small>标签</small>
-        </h1>
-      </div>
+  
 
-      
-        
+  
+  
+  
+
+  
 
   <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://yoursite.com/2019/07/19/MCMC-1-Markov-Chain/">
 
-      <h2 class="post-title">
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="尹恒">
+      <meta itemprop="description" content>
+      <meta itemprop="image" content="/images/avatar.gif">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="yh's blog">
+    </span>
+
+    
+      <header class="post-header">
+
         
-          <a class="post-title-link" href="/2019/07/19/MCMC-1-Markov-Chain/" itemprop="url">
-            
-              <span itemprop="name">MCMC-1-Markov-Chain</span>
-            
-          </a>
         
-      </h2>
+          <h1 class="post-title" itemprop="name headline">MCMC-1-Markov-Chain
 
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-19T22:19:09+08:00" content="2019-07-19">
-          07-19
-        </time>
-      </div>
+              
+            
+          </h1>
+        
 
-    </header>
-  </article>
+        <div class="post-meta">
 
+          
+          
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+
+              
+                
+              
+
+              <time title="创建时间：2019-07-19 22:19:09 / 修改时间：22:48:02" itemprop="dateCreated datePublished" datetime="2019-07-19T22:19:09+08:00">2019-07-19</time>
+            </span>
+          
+
+          
+            
+
+            
+          
+
+          
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-folder-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">分类于</span>
+              
+              
+                <span itemprop="about" itemscope itemtype="http://schema.org/Thing"><a href="/categories/机器学习/" itemprop="url" rel="index"><span itemprop="name">机器学习</span></a></span>
+
+                
+                
+              
+            </span>
+          
+
+          
+            
+            
+          
+
+          
+          
+
+          
+
+          
+
+          <br>
+          
+
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
 
       
-        
+      
 
-  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
-    <header class="post-header">
+      
+        <h2 id="马尔科夫链概述"><a href="#马尔科夫链概述" class="headerlink" title="马尔科夫链概述"></a>马尔科夫链概述</h2><p>马尔科夫链假设每一个时间步$t$的状态$X_t$的状态仅依赖于上一个时间步的状态$X_{t-1}$。用公式表达就是：<br>$$<br>P\left(X_{t+1} | \ldots X_{t-2}, X_{t-1}, X_{t}\right)=P\left(X_{t+1} | X_{t}\right)<br>$$<br>对于一个马尔科夫链来说，只要我们能够求出任意两个状态之间的转换概率，那么随着马尔科夫链的不断迭代，<strong>其最终状态的概率必定收敛</strong>。（前提是各转移概率不为0，也就是说每个状态都可以转换为任意状态。）</p>
+<p>举一个列子：</p>
+<p><img src="Markov_Chain.png" alt></p>
+<p>上图是一个股票市场的马尔科夫链，共有三种状态，牛市（Bull market）, 熊市（Bear market）和横盘（Stagnant market） ，定义牛市为0，熊市为1，横盘为2，矩阵$P_{ij}$表示从状态$i$转移到状态$j$的概率。最终我们获得马尔科夫状态转移矩阵如下：<br>$$<br>P=\left(\begin{array}{ccc}{0.9} &amp; {0.075} &amp; {0.025} \ {0.15} &amp; {0.8} &amp; {0.05} \ {0.25} &amp; {0.25} &amp; {0.5}\end{array}\right)<br>$$<br>接下来我们使用代码验证其必定收敛的性质：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
 
-      <h2 class="post-title">
-        
-          <a class="post-title-link" href="/2019/07/19/MCMC-1-Monte-Carlo-Method/" itemprop="url">
-            
-              <span itemprop="name">mcmc:(1) 蒙特卡洛</span>
-            
-          </a>
-        
-      </h2>
-
-      <div class="post-meta">
-        <time class="post-time" itemprop="dateCreated" datetime="2019-07-19T10:45:22+08:00" content="2019-07-19">
-          07-19
-        </time>
-      </div>
-
-    </header>
-  </article>
-
+<p>模型状态概率最终会收敛于[ 0.625   0.3125  0.0625]，而且事实上无论你怎么初始化状态概率，模型最终都会收敛到这个状态。</p>
+<p><strong>同时，对于一个确定的状态转移矩阵$P$，它的n次幂$P^n$对应的状态概率也会收敛到同样的稳定分布。</strong></p>
+<h2 id="基于马尔科夫链进行采样"><a href="#基于马尔科夫链进行采样" class="headerlink" title="基于马尔科夫链进行采样"></a>基于马尔科夫链进行采样</h2><p>如果我们能够得到一个分布对应的马尔科夫状态转移矩阵，我们就能采样出这个平稳分布的样本集。</p>
+<p>任意选择一个初始分布$\pi_0(x)$，如高斯分布，对其进行采样获得样本$x_0$，基于状态转移条件概率$P(x|x_0)$采样状态值$x_1$，如此重复，当达到一定次数$n_1$时，我们便可以假定分布已经收敛到平稳分布，再重复$n_2$次，获得的$(x_{n_1}，x_{n_1+1},…x_{n_1+n_2})$即可视作我们的样本集，$n_2$为样本集中样本的数目。</p>
+<h2 id="小结"><a href="#小结" class="headerlink" title="小结"></a>小结</h2><p>使用马尔科夫链进行采样存在一个问题，如何获得转移概率矩阵$P$呢？详见下一节。</p>
+<h2 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h2><p>本文内容主要来自刘建平老师的博客<a href="https://www.cnblogs.com/pinard/p/6632399.html" target="_blank" rel="noopener">https://www.cnblogs.com/pinard/p/6632399.html</a> </p>
 
       
     </div>
 
+    
+
+    
+      
+    
+
+    
+    
+    
+
+    <div>
+      
+        <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+      
+    </div>
+
+    
+
+    
+      
+    
+    
+
+    
+
+    
+    <footer class="post-footer">
+      
+        
+          
+        
+        <div class="post-tags">
+          
+            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+          
+            <a href="/tags/统计/" rel="tag"># 统计</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2019/07/19/nlp-task-metric/" rel="next" title="nlp task metric">
+                <i class="fa fa-chevron-left"></i> nlp task metric
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
   </div>
   
   
   
+  </article>
 
-  
 
+  </div>
 
 
           </div>
           
+
+  
+
+
 
         </div>
         
@@ -476,8 +600,17 @@
       
 
       
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
 
-      <div class="site-overview-wrap sidebar-panel sidebar-panel-active">
+      <div class="site-overview-wrap sidebar-panel">
         <div class="site-overview">
 
           <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
@@ -591,6 +724,23 @@
         </div>
       </div>
 
+      
+      <!--noindex-->
+        <div class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+            
+            
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#马尔科夫链概述"><span class="nav-number">1.</span> <span class="nav-text">马尔科夫链概述</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#基于马尔科夫链进行采样"><span class="nav-number">2.</span> <span class="nav-text">基于马尔科夫链进行采样</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#小结"><span class="nav-number">3.</span> <span class="nav-text">小结</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#说明"><span class="nav-number">4.</span> <span class="nav-text">说明</span></a></li></ol></div>
+            
+
+          </div>
+        </div>
+      <!--/noindex-->
       
 
       
@@ -732,6 +882,10 @@
 
 
   
+  <script src="/js/scrollspy.js?v=7.2.0"></script>
+<script src="/js/post-details.js?v=7.2.0"></script>
+
+
 
   <script src="/js/next-boot.js?v=7.2.0"></script>
 
@@ -745,6 +899,8 @@
 
   
 
+
+  
 
 
   
@@ -1066,7 +1222,60 @@
         onPopupClose();
       }
     });
-  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1085,20 +1294,7 @@
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
 
-
-
-
-
-  
-
-  
-
-  
-  
-
-  
-  
-
+    
   
 
 
