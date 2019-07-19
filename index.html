@@ -751,7 +751,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-19 10:02:01" itemprop="dateModified" datetime="2019-07-19T10:02:01+08:00">2019-07-19</time>
+                <time title="修改时间：2019-07-19 10:42:45" itemprop="dateModified" datetime="2019-07-19T10:42:45+08:00">2019-07-19</time>
               </span>
             
           
@@ -827,7 +827,7 @@
 <li>《Ramesh Nallapati, Feifei Zhai, and Bowen Zhou. Summarunner: A recurrent neural network based sequence model for extractive summarization of documents. In Thirty-First AAAI Conference on Artificial Intelligence, 2017.  》</li>
 </ul>
 <p>本文提出了<strong>Summarunner</strong>，模型结构如下：$\color{blue}{没找到开源代码}$</p>
-<p><img src="images/SummaRuNNer.png" alt="Summarunner"></p>
+<p><img src="SummaRuNNer.png" alt="Summarunner"></p>
 <p>[1] 将word级别的词向量输入进双向GRU网络中获得句向量表示</p>
 <p>[2] 将所有句向量输入进双向GRU网络中</p>
 <p>[3] 将[2]中输出的所有向量通过averaged pooling获得文档的向量表示<br>$$<br>\mathrm{d}=\tanh \left(W_{d} \frac{1}{N_{d}} \sum_{j=1}^{N^{d}}\left[\mathbf{h}<em>{j}^{f}, \mathbf{h}</em>{j}^{b}\right]+\mathbf{b}\right)<br>$$<br><em>将每个sentence的正向与反向输出向量拼接起来进行平均池化，再映射回原来的维度。</em></p>
@@ -1727,7 +1727,70 @@
         onPopupClose();
       }
     });
-  </script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
+  </script>
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+  
+    
+      
+    
+      
+    
+      
+        
+      
+    
+  
+
+  
+    
+      <script type="text/x-mathjax-config">
+  
+
+  MathJax.Hub.Config({
+    tex2jax: {
+      inlineMath: [ ['$', '$'], ['\\(', '\\)'] ],
+      processEscapes: true,
+      skipTags: ['script', 'noscript', 'style', 'textarea', 'pre', 'code']
+    },
+    TeX: {
+      
+      equationNumbers: {
+        autoNumber: 'AMS'
+      }
+    }
+  });
+  MathJax.Hub.Register.StartupHook('TeX Jax Ready', function() {
+    MathJax.InputJax.TeX.prefilterHooks.Add(function(data) {
+      if (data.display) {
+        var next = data.script.nextSibling;
+        while (next && next.nodeName.toLowerCase() === '#text') { next = next.nextSibling }
+        if (next && next.nodeName.toLowerCase() === 'br') { next.parentNode.removeChild(next) }
+      }
+    });
+  });
+</script>
+
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Queue(function() {
+    var all = MathJax.Hub.getAllJax(), i;
+    for (i = 0; i < all.length; i += 1) {
+      document.getElementById(all[i].inputID + '-Frame').parentNode.className += ' has-jax';
+    }
+  });
+</script>
+<script src="//cdn.jsdelivr.net/npm/mathjax@2/MathJax.js?config=TeX-AMS-MML_HTMLorMML"></script><!-- hexo-inject:begin --><!-- Begin: Injected MathJax -->
 <script type="text/x-mathjax-config">
   MathJax.Hub.Config({"tex2jax":{"inlineMath":[["$","$"],["\\(","\\)"]],"skipTags":["script","noscript","style","textarea","pre","code"],"processEscapes":true},"TeX":{"equationNumbers":{"autoNumber":"AMS"}}});
 </script>
@@ -1746,15 +1809,9 @@
 <!-- End: Injected MathJax -->
 <!-- hexo-inject:end -->
 
-
-
-
-
+    
   
 
-  
-
-  
 
   
 
