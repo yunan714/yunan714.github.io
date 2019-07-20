@@ -457,6 +457,14 @@
           
 
           
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="fa fa-eye"></i>
+                 阅读次数： 
+                <span class="busuanzi-value" id="busuanzi_value_page_pv"></span>
+              </span>
+            </span>
+          
 
           
 
@@ -482,12 +490,15 @@
       
 
       
-        <h2 id="马尔科夫链概述"><a href="#马尔科夫链概述" class="headerlink" title="马尔科夫链概述"></a>马尔科夫链概述</h2><p>马尔科夫链假设每一个时间步$t$的状态$X_t$的状态仅依赖于上一个时间步的状态$X_{t-1}$。用公式表达就是：<br>$$<br>P\left(X_{t+1} | \ldots X_{t-2}, X_{t-1}, X_{t}\right)=P\left(X_{t+1} | X_{t}\right)<br>$$<br>对于一个马尔科夫链来说，只要我们能够求出任意两个状态之间的转换概率，那么随着马尔科夫链的不断迭代，<strong>其最终状态的概率必定收敛</strong>。（前提是各转移概率不为0，也就是说每个状态都可以转换为任意状态。）</p>
+        <h2 id="马尔科夫链概述"><a href="#马尔科夫链概述" class="headerlink" title="马尔科夫链概述"></a>马尔科夫链概述</h2><p>马尔科夫链假设每一个时间步$t$的状态$X_t$的状态仅依赖于上一个时间步的状态$X_{t-1}$。用公式表达就是：</p>
+<script type="math/tex; mode=display">
+P\left(X_{t+1} | \ldots X_{t-2}, X_{t-1}, X_{t}\right)=P\left(X_{t+1} | X_{t}\right)</script><p>对于一个马尔科夫链来说，只要我们能够求出任意两个状态之间的转换概率，那么随着马尔科夫链的不断迭代，<strong>其最终状态的概率必定收敛</strong>。（前提是各转移概率不为0，也就是说每个状态都可以转换为任意状态。）</p>
 <p>举一个列子：</p>
 <p><img src="Markov_Chain.png" alt></p>
-<p>上图是一个股票市场的马尔科夫链，共有三种状态，牛市（Bull market）, 熊市（Bear market）和横盘（Stagnant market） ，定义牛市为0，熊市为1，横盘为2，矩阵$P_{ij}$表示从状态$i$转移到状态$j$的概率。最终我们获得马尔科夫状态转移矩阵如下：<br>$$<br>P=\left(\begin{array}{ccc}{0.9} &amp; {0.075} &amp; {0.025} \ {0.15} &amp; {0.8} &amp; {0.05} \ {0.25} &amp; {0.25} &amp; {0.5}\end{array}\right)<br>$$<br>接下来我们使用代码验证其必定收敛的性质：</p>
+<p>上图是一个股票市场的马尔科夫链，共有三种状态，牛市（Bull market）, 熊市（Bear market）和横盘（Stagnant market） ，定义牛市为0，熊市为1，横盘为2，矩阵$P_{ij}$表示从状态$i$转移到状态$j$的概率。最终我们获得马尔科夫状态转移矩阵如下：</p>
+<script type="math/tex; mode=display">
+P=\left(\begin{array}{ccc}{0.9} & {0.075} & {0.025} \\ {0.15} & {0.8} & {0.05} \\ {0.25} & {0.25} & {0.5}\end{array}\right)</script><p>接下来我们使用代码验证其必定收敛的性质：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-
 <p>模型状态概率最终会收敛于[ 0.625   0.3125  0.0625]，而且事实上无论你怎么初始化状态概率，模型最终都会收敛到这个状态。</p>
 <p><strong>同时，对于一个确定的状态转移矩阵$P$，它的n次幂$P^n$对应的状态概率也会收敛到同样的稳定分布。</strong></p>
 <h2 id="基于马尔科夫链进行采样"><a href="#基于马尔科夫链进行采样" class="headerlink" title="基于马尔科夫链进行采样"></a>基于马尔科夫链进行采样</h2><p>如果我们能够得到一个分布对应的马尔科夫状态转移矩阵，我们就能采样出这个平稳分布的样本集。</p>
@@ -535,9 +546,9 @@
         
         <div class="post-tags">
           
-            <a href="/tags/机器学习/" rel="tag"># 机器学习</a>
+            <a href="/tags/机器学习/" rel="tag"><i class="fa fa-tag"></i># 机器学习</a>
           
-            <a href="/tags/统计/" rel="tag"># 统计</a>
+            <a href="/tags/统计/" rel="tag"><i class="fa fa-tag"></i># 统计</a>
           
         </div>
       
@@ -653,7 +664,9 @@
         
           
         
-        <span class="site-state-item-count">2</span>
+          
+        
+        <span class="site-state-item-count">3</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -680,7 +693,11 @@
         
           
         
-        <span class="site-state-item-count">5</span>
+          
+        
+          
+        
+        <span class="site-state-item-count">7</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -762,7 +779,8 @@
 
     <footer id="footer" class="footer">
       <div class="footer-inner">
-        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+        <script async src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+<script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js"></script>
 <div class="copyright">&copy; <span itemprop="copyrightYear">2019</span>
   <span class="with-love" id="animate">
     <i class="fa fa-user"></i>
@@ -782,9 +800,8 @@
   <span class="post-meta-divider">|</span>
 
 <div class="powered-by">
-<i class="fa fa-user-md"></i><span id="busuanzi_container_site_uv">
-  本站访客数:<span id="busuanzi_value_site_uv"></span>
-</span>
+<i class="fa fa-user-md"></i>
+
 </div>
 
   <div class="theme-info">主题 – <a href="https://theme-next.org" class="theme-link" rel="noopener" target="_blank">NexT.Gemini</a> v7.2.0</div>
@@ -793,9 +810,35 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共字</span>
+  <span class="post-count">博客全站共3.2k字</span>
 </div>
         
+<div class="busuanzi-count">
+  <script async src="https://busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script>
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-user"></i>
+    </span>
+    <span class="site-uv" title="总访客量">
+      <span class="busuanzi-value" id="busuanzi_value_site_uv"></span>
+    </span>
+  
+
+  
+    <span class="post-meta-divider">|</span>
+  
+
+  
+    <span class="post-meta-item-icon">
+      <i class="fa fa-eye"></i>
+    </span>
+    <span class="site-pv" title="总访问量">
+      <span class="busuanzi-value" id="busuanzi_value_site_pv"></span>
+    </span>
+  
+</div>
+
 
 
 
