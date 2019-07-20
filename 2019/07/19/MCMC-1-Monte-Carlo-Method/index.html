@@ -104,7 +104,7 @@
 <meta property="og:image" content="http://yoursite.com/2019/07/19/MCMC-1-Monte-Carlo-Method/monte_carlo.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/19/MCMC-1-Monte-Carlo-Method/accept_refuse_sample.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/19/MCMC-1-Monte-Carlo-Method/sample_result.png">
-<meta property="og:updated_time" content="2019-07-19T14:57:20.303Z">
+<meta property="og:updated_time" content="2019-07-20T14:18:32.631Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="mcmc:(1) 蒙特卡洛">
 <meta name="twitter:description" content="介绍蒙特卡洛方法">
@@ -423,13 +423,23 @@
                 
               
 
-              <time title="创建时间：2019-07-19 10:45:22 / 修改时间：22:57:20" itemprop="dateCreated datePublished" datetime="2019-07-19T10:45:22+08:00">2019-07-19</time>
+              <time title="创建时间：2019-07-19 10:45:22" itemprop="dateCreated datePublished" datetime="2019-07-19T10:45:22+08:00">2019-07-19</time>
             </span>
           
 
           
             
 
+            
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-calendar-check-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">更新于</span>
+                
+                <time title="修改时间：2019-07-20 22:18:32" itemprop="dateModified" datetime="2019-07-20T22:18:32+08:00">2019-07-20</time>
+              </span>
             
           
 
@@ -495,24 +505,16 @@
         <h1 id="MCMC——part1-蒙特卡洛搜索"><a href="#MCMC——part1-蒙特卡洛搜索" class="headerlink" title="MCMC——part1:蒙特卡洛搜索"></a>MCMC——part1:蒙特卡洛搜索</h1><h2 id="MCMC概述"><a href="#MCMC概述" class="headerlink" title="MCMC概述"></a>MCMC概述</h2><p>MCMC(Markov Chain Monte Carlo 马尔科夫链蒙特卡洛)</p>
 <h2 id="蒙特卡洛方法"><a href="#蒙特卡洛方法" class="headerlink" title="蒙特卡洛方法"></a>蒙特卡洛方法</h2><p>蒙特卡洛方法最早被用于求解一些不好计算的积分问题，如下图：</p>
 <p><img src="monte_carlo.png" alt></p>
-<p>为了解决这个问题，我们假定使用一个值$f(x)$来代表区间$[a,b]$上所有值，此时积分的近似解就为:</p>
-<script type="math/tex; mode=display">
-(b-a)f(x)</script><p>使用一个值估计当然是不合理的，但是我们可以使用多个值来估计，假定我们对区间$[a,b]$进行n次采样，得到的采样$x_i$对应的被积函数值为$f(x_i)$，积分的近似解即为：</p>
-<script type="math/tex; mode=display">
-\frac{b-a}{n} \sum_{i=0}^{n-1} f\left(x_{i}\right)</script><p>但是这种情况是<strong>建立在$x$是均匀分布的情况下</strong>，而事实上大多数问题中的”$x$”都不会是服从均匀分布的。假定我们得到了$x$的概率分布函数$P(x)$，我们便可以求得更加准确的积分：</p>
-<script type="math/tex; mode=display">
-\theta = \int_a^b f(x)dx = \int_a^b \frac{f(x)}{p(x)}p(x)dx\approx\frac{1}{n}\sum^{n-1}_{i=0}\frac{f(x_i)}{p(x_i)}</script><h2 id="基于概率分布进行采样"><a href="#基于概率分布进行采样" class="headerlink" title="基于概率分布进行采样"></a>基于概率分布进行采样</h2><p>假定我们已知$x$的概率分布，要使用Monte Carlo对$f(x)$积分进行估计，需要依据概率分布$p(x)$对$x$进行采样。对于常见的分布如正态分布、t分布等是可以很容易的通过已有的库获得的。但是对于一些不常见的分布，如何对其进行采样呢？</p>
+<p>为了解决这个问题，我们假定使用一个值$f(x)$来代表区间$[a,b]$上所有值，此时积分的近似解就为:<br>$$<br>(b-a)f(x)<br>$$<br>使用一个值估计当然是不合理的，但是我们可以使用多个值来估计，假定我们对区间$[a,b]$进行n次采样，得到的采样$x_i$对应的被积函数值为$f(x_i)$，积分的近似解即为：<br>$$<br>\frac{b-a}{n} \sum_{i=0}^{n-1} f\left(x_{i}\right)<br>$$<br>但是这种情况是<strong>建立在$x$是均匀分布的情况下</strong>，而事实上大多数问题中的”$x$”都不会是服从均匀分布的。假定我们得到了$x$的概率分布函数$P(x)$，我们便可以求得更加准确的积分：<br>$$<br>\theta = \int_a^b f(x)dx = \int_a^b \frac{f(x)}{p(x)}p(x)dx\approx\frac{1}{n}\sum^{n-1}_{i=0}\frac{f(x_i)}{p(x_i)}<br>$$</p>
+<h2 id="基于概率分布进行采样"><a href="#基于概率分布进行采样" class="headerlink" title="基于概率分布进行采样"></a>基于概率分布进行采样</h2><p>假定我们已知$x$的概率分布，要使用Monte Carlo对$f(x)$积分进行估计，需要依据概率分布$p(x)$对$x$进行采样。对于常见的分布如正态分布、t分布等是可以很容易的通过已有的库获得的。但是对于一些不常见的分布，如何对其进行采样呢？</p>
 <h2 id="接受-拒绝采样"><a href="#接受-拒绝采样" class="headerlink" title="接受-拒绝采样"></a>接受-拒绝采样</h2><p>假定一个可以采样的分布，如高斯分布$q(x)$，称为proposal distribution。</p>
 <p><img src="accept_refuse_sample.png" alt></p>
 <p>设定一个常量$k$使得$p(x)$总在$kq(x)$的下方，如上图。</p>
 <p>首先采样得到$q(x)$的一个样本$z_0$，然后从均匀分布$(0,kq(z_0))$中采样得到一个值$u$，如果$u$落在上方灰色区域则拒绝此次采样，否则接受此次采样，重复直到获得足够数目的样本。</p>
-<p>试着分析一下这种做法，每次采样获得的样本接受概率如下:</p>
-<script type="math/tex; mode=display">
-p(\text {accept})=\int \frac{\tilde{p}(z)}{k q(z)} q(z) d z=\frac{1}{k} \int \tilde{p}(z) d z</script><p>下面我们尝试使用拒绝接受采样对分布</p>
-<script type="math/tex; mode=display">
-\tilde{p}(z)=0.3 \exp \left(-(z-0.3)^{2}\right)+0.7 \exp \left(-(z-2)^{2} / 0.3\right)</script><p>进行采样。归一化常数为1.2113，参考分布为$Gussian(1.4,1.2)$。</p>
+<p>试着分析一下这种做法，每次采样获得的样本接受概率如下:<br>$$<br>p(\text {accept})=\int \frac{\tilde{p}(z)}{k q(z)} q(z) d z=\frac{1}{k} \int \tilde{p}(z) d z<br>$$<br>下面我们尝试使用拒绝接受采样对分布<br>$$<br>\tilde{p}(z)=0.3 \exp \left(-(z-0.3)^{2}\right)+0.7 \exp \left(-(z-2)^{2} / 0.3\right)<br>$$<br>进行采样。归一化常数为1.2113，参考分布为$Gussian(1.4,1.2)$。</p>
 <p>python代码实现</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘制目标分布</span></span><br><span class="line"><span class="function"><span class="keyword">def</span> <span class="title">cal_px</span><span class="params">(x)</span>:</span> </span><br><span class="line">    <span class="keyword">return</span> (<span class="number">0.3</span>*np.exp(-(x<span class="number">-0.3</span>)**<span class="number">2</span>) + <span class="number">0.7</span>* np.exp(-(x<span class="number">-2.</span>)**<span class="number">2</span>/<span class="number">0.3</span>))/<span class="number">1.2113</span></span><br><span class="line">x = np.arange(<span class="number">-4.</span>,<span class="number">6.</span>,<span class="number">0.01</span>)</span><br><span class="line">plt.plot(x,cal_px(x),color=<span class="string">'r'</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">#生成qz的分布</span></span><br><span class="line">size = int(<span class="number">1e+07</span>)</span><br><span class="line">sigma = <span class="number">1.2</span></span><br><span class="line">z = np.random.normal(loc=<span class="number">1.4</span>,scale=sigma,size=size)</span><br><span class="line">qz = <span class="number">1</span>/(np.sqrt(<span class="number">2</span>*np.pi)*sigma)*np.exp(<span class="number">-0.5</span>*(z<span class="number">-1.4</span>)**<span class="number">2</span>/sigma**<span class="number">2</span>)</span><br><span class="line">k = <span class="number">2.5</span></span><br><span class="line"></span><br><span class="line"><span class="comment">#再0到kq(z)之间均匀采样</span></span><br><span class="line">u = np.random.uniform(low = <span class="number">0</span>, high = k*qz, size = size)</span><br><span class="line"></span><br><span class="line"><span class="comment">#从sample中选出符合条件的z</span></span><br><span class="line">pz =  <span class="number">0.3</span>*np.exp(-(z<span class="number">-0.3</span>)**<span class="number">2</span>) + <span class="number">0.7</span>* np.exp(-(z<span class="number">-2.</span>)**<span class="number">2</span>/<span class="number">0.3</span>)</span><br><span class="line">sample = z[pz &gt;= u]</span><br><span class="line"></span><br><span class="line"><span class="comment">#绘制采样的图像</span></span><br><span class="line">plt.hist(sample,bins=<span class="number">150</span>, normed=<span class="literal">True</span>, edgecolor=<span class="string">'black'</span>)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+
 <p>结果如下，可以看出效果还是非常好的：</p>
 <p><img src="sample_result.png" alt></p>
 <h2 id="一些问题"><a href="#一些问题" class="headerlink" title="一些问题"></a>一些问题</h2><ul>
