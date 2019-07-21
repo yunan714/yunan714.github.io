@@ -105,7 +105,8 @@
 <meta property="og:image" content="http://yoursite.com/2019/07/19/Neural-Network-Initialization/gauss_tanh_2.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/19/Neural-Network-Initialization/Xavier_tanh.png">
 <meta property="og:image" content="http://yoursite.com/2019/07/19/Neural-Network-Initialization/Xavier_relu.png">
-<meta property="og:updated_time" content="2019-07-20T14:18:48.882Z">
+<meta property="og:image" content="http://yoursite.com/2019/07/19/Neural-Network-Initialization/He_relu.png">
+<meta property="og:updated_time" content="2019-07-21T13:32:18.278Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="Neural_Network_Initialization">
 <meta name="twitter:description" content="介绍了神经网络在各种不同情况下需要使用的各种初始化方法及其原理分析">
@@ -439,7 +440,7 @@
                 
                   <span class="post-meta-item-text">更新于</span>
                 
-                <time title="修改时间：2019-07-20 22:18:48" itemprop="dateModified" datetime="2019-07-20T22:18:48+08:00">2019-07-20</time>
+                <time title="修改时间：2019-07-21 21:32:18" itemprop="dateModified" datetime="2019-07-21T21:32:18+08:00">2019-07-21</time>
               </span>
             
           
@@ -516,12 +517,12 @@
 <p><img src="gauss_tanh_2.png" alt></p>
 <p>为了解决这个问题，Glorot和Bengio在2010提出了Xavier初始化方法。</p>
 <h3 id="Xavier-Initialization"><a href="#Xavier-Initialization" class="headerlink" title="Xavier Initialization"></a>Xavier Initialization</h3><p>对于神经网络，我们希望他的输入空间和输出空间是同一个分布（一般用方差来衡量）。如果输入空间过于稀疏而输出空间过于稠密，那么通过反向传播得到的损失函数所返回的梯度就会变得很小使得网络难以训练；反之则会导致梯度爆炸。</p>
-<p>在神经网络中层与层之间的传递主要是线性组合的形式：<br>$$<br>Z = \sum_{i=1}^{n}w_ix_i<br>$$<br>方差<br>$$<br>Var(w_ix_i)=Var(w_i)Var(x_i)+E^2(w_i)Var(x_i)+E^2(x_i)Var(w_i)<br>$$</p>
+<p>在神经网络中层与层之间的传递主要是线性组合的形式：<br>$$<br>Z = \sum_{i=1}^{n}w_ix_i \tag{1.1}<br>$$<br>方差<br>$$<br>Var(w_ix_i)=Var(w_i)Var(x_i)+E^2(w_i)Var(x_i)+E^2(x_i)Var(w_i)\tag{1.2}<br>$$</p>
 <hr>
 <p><strong>推导</strong></p>
 <p>已知$Var(x)=E(x^2)-E^2(x)$<br>$$<br>Var(xy)=E(x^2y^2)-E^2(xy)<br>$$<br>由于$x$与$y$相互独立<br>$$<br>\begin{split}Var(xy)&amp;=E(x^2)E(y^2)-E^2(x)E^2(y)\<br>&amp;=(Var(x)+E^2(x))(Var(y)+E^2(y))-E^2(x)E^2(y)\<br>&amp;=Var(x)Var(y)+E^2(x)Var(y)+E^2(y)Var(x)\end{split}<br>$$</p>
 <hr>
-<p>通过假定$E(w_i)$与$E(x_i)$均为0（这个可以通过batch normalization对每一层重新调整分布做到，事实上影响不大），我们有<br>$$<br>Var(w_ix_i)=Var(w_i)Var(x_i)<br>$$<br><strong>因为假定$w_i与x_i$均服从独立同分布假设</strong>（所有机器学习的通用假设），$Var(x_i)=Var(x)$，最终：<br>$$<br>Var(z)=nVar(x)Var(w)<br>$$<br>要保持输入$x$与输出的$z$方差不变，使$w$得方差为1即可。从正向和反向两个角度来看，$n_{in}$与$n_{out}$是不同的，此处对其取平均值，得到$w$方差表达式：<br>$$<br>Var(w)=\frac{2}{n_{in}+n_{out}}<br>$$<br><strong>假定$w$为均匀分布</strong>，均匀分布对应的方差为<br>$$<br>var(w)=\frac{(a-b)^2}{12}<br>$$<br>推出$w$的分布为:<br>$$<br>w\sim U[-\sqrt{\frac{6}{n_{in}+n_{out}}},\sqrt{\frac{6}{n_{in}+n_{out}}}]<br>$$<br>这便是Xavier初始化方法。</p>
+<p>通过假定$E(w_i)$与$E(x_i)$均为0（这个可以通过batch normalization对每一层重新调整分布做到，事实上影响不大），我们有<br>$$<br>Var(w_ix_i)=Var(w_i)Var(x_i)\tag{1.3}<br>$$<br><strong>因为假定$w_i与x_i$均服从独立同分布假设（所有机器学习的通用假设）</strong>，$Var(x_i)=Var(x)$，最终：<br>$$<br>Var(z)=nVar(x)Var(w)\tag{1.4}<br>$$<br>要保持输入$x$与输出的$z$方差不变，使$w$得方差为1即可。从正向和反向两个角度来看，$n_{in}$与$n_{out}$是不同的，此处对其取平均值，得到$w$方差表达式：<br>$$<br>Var(w)=\frac{2}{n_{in}+n_{out}}\tag{1.5}<br>$$<br><strong>假定$w$为均匀分布</strong>，均匀分布对应的方差为<br>$$<br>var(w)=\frac{(a-b)^2}{12}\tag{1.6}<br>$$<br>推出$w$的分布为:<br>$$<br>w\sim U[-\sqrt{\frac{6}{n_{in}+n_{out}}},\sqrt{\frac{6}{n_{in}+n_{out}}}]\tag{1.7}<br>$$<br>这便是Xavier初始化方法。</p>
 <p>同样，我们使用代码对其进行验证：</p>
 <p><img src="Xavier_tanh.png" alt></p>
 <p>可以看出效果非常的好，即使是在第十层也维持了良好的分布。</p>
@@ -529,7 +530,27 @@
 <p><img src="Xavier_relu.png" alt></p>
 <p>果然，一开始效果还可以，后来就基本全部接近于0了。</p>
 <p>为了解决Relu激活函数的初始化问题，Kaiming He大佬与2015年提出了一种新的初始化方法，可以帮助激活函数为Relu的神经网络获得良好的初始化，称之为He初始化。</p>
-<h3 id="He-Initialization"><a href="#He-Initialization" class="headerlink" title="He Initialization"></a>He Initialization</h3>
+<h3 id="He-Initialization"><a href="#He-Initialization" class="headerlink" title="He Initialization"></a>He Initialization</h3><p>该初始化方法主要是针对卷积网络做的分析，首先对于卷积网络的每一层，我们有:<br>$$<br>y_l = w_l x_l + b_l\tag{2.1}<br>$$<br>$x_l$的维度为$k^2c\times1$，表示图像中一块$k\times k$并且包含$c$个通道的区域，即卷积操作时对应的输入区域，我们为方便后面的表达令$n=k^2c$；$w_l$的维度为$n\times d$，表示为$d$个卷积核；最后得到对应一个pixel位置上的$d$个通道的值就是$y_l \in \mathcal{R}^{d\times 1}$。同时对于整个网络来说，$c_l=d_{l-1}$。</p>
+<p>对上式求方差，假定$w_l$与$x_l$相互独立且两者均独立同分布：<br>$$<br>Var(y_l)=n_lVar(w_lx_l)\tag{2.2}<br>$$<br>假定$w_l$是zero-mean，原因见上一节，公式推导也见上一节。<br>$$<br>Var(y_l)=n_lVar(w_l)E(x_l^2)\tag{2.3}<br>$$<br>由于RELU激活函数的性质，$x_l=max(0,y_{l-1})$，因此$E(x_l^2)\neq Var(x_l)$，假定我们使得$w_l$是一个关于0对称的分布，同时$y_l$也是一个关于0对称的分布，这会导致<br>$$<br>E(x_l^2)=\frac{1}{2}Var(y_{l-1})\tag{2.4}<br>$$<br>$y_{l-1}$作为上一层的输出，在通过激活层RELU函数时，由于$y_l$关于0对称，一半的信息直接变为0，因此缩小为原来的$\frac{1}{2}$。</p>
+<p>将2.4式代入2.3式中:<br>$$<br>\begin{split}Var\left[y_{l}\right]&amp;=\frac{1}{2} n_{l} Var\left[w_{l}\right] Var\left[y_{l-1}\right]\end{split}\tag{2.5}<br>$$</p>
+<p>$$<br>\operatorname{Var}\left[y_{L}\right]=\operatorname{Var}\left[y_{1}\right]\left(\prod_{l=2}^{L} \frac{1}{2} n_{l} \operatorname{Var}\left[w_{l}\right]\right)\tag{2.6}<br>$$</p>
+<p>为了维持输入输出在同一个分布上，便需要满足<br>$$<br>\frac{1}{2} n_{l} \operatorname{Var}\left[w_{l}\right]=1, \quad \forall l\tag{2.7}<br>$$<br>因此直接每一层按照$w_l \sim \mathcal{N}(0,\sqrt{2/n_l})$的分布随机初始化即可。</p>
+<p>同理，反向传播时：<br>$$<br>\Delta \mathbf{x}<em>{l}=\hat{\mathbf{W}}</em>{l} \Delta \mathbf{y}_{l}\tag{2.8}<br>$$</p>
+<p>$$<br>\begin{aligned} \operatorname{Var}\left[\Delta x_{l}\right] &amp;=\hat{n}<em>{l} \operatorname{Var}\left[w</em>{l}\right] \operatorname{Var}\left[\Delta y_{l}\right] \ &amp;=\frac{1}{2} \hat{n}<em>{l} \operatorname{Var}\left[w</em>{l}\right] \operatorname{Var}\left[\Delta x_{l+1}\right] \end{aligned}\tag{2.9}<br>$$</p>
+<p>$$<br>\operatorname{Var}\left[\Delta x_{2}\right]=\operatorname{Var}\left[\Delta x_{L+1}\right]\left(\prod_{l=2}^{L} \frac{1}{2} \hat{n}<em>{l} \operatorname{Var}\left[w</em>{l}\right]\right)\tag{2.10}<br>$$</p>
+<p>$$<br>\frac{1}{2} \hat{n}<em>{l} \operatorname{Var}\left[w</em>{l}\right]=1, \quad \forall l<br>$$</p>
+<p>最终得到的结论是一致的。唯一需要注意的是对于第一层，由于没有RELU激活函数，方差并不会变成一半，需要单独拿出来进行初始化。还有对于通过前向和反向推出的两个结果来说，使用任意一种均可，都可以使其收敛，套用原文中的一句话“如果初始化适当的缩放了反向传播的信号，那么这种缩放也会体现在正向传播上，反之亦然。”</p>
+<p>再次通过代码验证效果：</p>
+<p><img src="He_relu.png" alt></p>
+<p>相对于之前来说效果好了很多。</p>
+<h3 id="正交初始化"><a href="#正交初始化" class="headerlink" title="正交初始化"></a>正交初始化</h3><p>Orthogonal Initialization主要用于循环神经网络的初始化问题中。</p>
+<p>对于循环神经网络，梯度爆炸和梯度消失使得其难以训练，而梯度爆炸和消失的本质在于同一个矩阵在每个时间步都参与了矩阵相乘，本质是特征值得爆炸。通过正交初始化使得其更新矩阵的特征值均为1，让矩阵在多次相乘后特征值仍然保持在稳定的状况下。目前LSTM或是GRU基本都使用SVD分解来完成正交初始化。</p>
+<p>$\color{red}{事实上这个方法也不是被完全认可，一部分人持反对意见，尚无定论。}$</p>
+<h3 id="Batch-Normalization"><a href="#Batch-Normalization" class="headerlink" title="Batch Normalization"></a>Batch Normalization</h3><p>BN更多是作为一种正则化方法来讲的，此处只是提一下，因为它与He、Xavier、正交初始化的核心思想都是保持数据在层与层之间传播时分布保持不变。</p>
+<h3 id="参考"><a href="#参考" class="headerlink" title="参考"></a>参考</h3><p><a href="https://link.zhihu.com/?target=http%3A//smerity.com/articles/2016/orthogonal_init.html" target="_blank" rel="noopener">Explaining and illustrating orthogonal initialization for recurrent neural networks</a> </p>
+<p>Delving Deep into Rectififiers：Surpassing Human-Level Performance on ImageNet Classifification</p>
+<p>Understanding the diffificulty of training deep feedforward neural networks</p>
+
       
     </div>
 
@@ -778,7 +799,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text"># 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0初始化"><span class="nav-number">1.1.</span> <span class="nav-text">0初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随机初始化"><span class="nav-number">1.2.</span> <span class="nav-text">随机初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Xavier-Initialization"><span class="nav-number">1.2.1.</span> <span class="nav-text">Xavier Initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#He-Initialization"><span class="nav-number">1.2.2.</span> <span class="nav-text">He Initialization</span></a></li></ol></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#简介"><span class="nav-number">1.</span> <span class="nav-text"># 简介</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#0初始化"><span class="nav-number">1.1.</span> <span class="nav-text">0初始化</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#随机初始化"><span class="nav-number">1.2.</span> <span class="nav-text">随机初始化</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#Xavier-Initialization"><span class="nav-number">1.2.1.</span> <span class="nav-text">Xavier Initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#He-Initialization"><span class="nav-number">1.2.2.</span> <span class="nav-text">He Initialization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#正交初始化"><span class="nav-number">1.2.3.</span> <span class="nav-text">正交初始化</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#Batch-Normalization"><span class="nav-number">1.2.4.</span> <span class="nav-text">Batch Normalization</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#参考"><span class="nav-number">1.2.5.</span> <span class="nav-text">参考</span></a></li></ol></li></ol></li></ol></div>
             
 
           </div>
@@ -830,7 +851,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共3.2k字</span>
+  <span class="post-count">博客全站共4.2k字</span>
 </div>
         
 <div class="busuanzi-count">
