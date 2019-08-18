@@ -101,10 +101,12 @@
 <meta property="og:site_name" content="yh&#39;s blog">
 <meta property="og:description" content="介绍​    隐含马尔科夫模型包括一个状态集合$Q={q_1,q_2,…,q_N}$以及观测集合$V={v_1,v_2,…,v_M}$。其中$N$和$M$分别是可能的状态数和观测数。 ​    $I$是长度为$T$的状态序列$I=(i_1,i_2,…i_T)$，$O$是对应的观测序列$O=(o_1,o_2,…,o_T)$。 ​    $A$是状态转移矩阵，表示由一个状态转移到另一个状态的概率。$$">
 <meta property="og:locale" content="zh-CN">
-<meta property="og:updated_time" content="2019-08-18T08:26:43.017Z">
+<meta property="og:image" content="http://yoursite.com/2019/08/18/HMM马尔科夫链/HMM.jpg">
+<meta property="og:updated_time" content="2019-08-18T10:09:11.616Z">
 <meta name="twitter:card" content="summary">
 <meta name="twitter:title" content="HMM马尔科夫链">
 <meta name="twitter:description" content="介绍​    隐含马尔科夫模型包括一个状态集合$Q={q_1,q_2,…,q_N}$以及观测集合$V={v_1,v_2,…,v_M}$。其中$N$和$M$分别是可能的状态数和观测数。 ​    $I$是长度为$T$的状态序列$I=(i_1,i_2,…i_T)$，$O$是对应的观测序列$O=(o_1,o_2,…,o_T)$。 ​    $A$是状态转移矩阵，表示由一个状态转移到另一个状态的概率。$$">
+<meta name="twitter:image" content="http://yoursite.com/2019/08/18/HMM马尔科夫链/HMM.jpg">
 
 
 
@@ -419,7 +421,7 @@
                 
               
 
-              <time title="创建时间：2019-08-18 15:19:21 / 修改时间：16:26:43" itemprop="dateCreated datePublished" datetime="2019-08-18T15:19:21+08:00">2019-08-18</time>
+              <time title="创建时间：2019-08-18 15:19:21 / 修改时间：18:09:11" itemprop="dateCreated datePublished" datetime="2019-08-18T15:19:21+08:00">2019-08-18</time>
             </span>
           
 
@@ -474,7 +476,8 @@
         <h2 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h2><p>​    隐含马尔科夫模型包括一个状态集合$Q={q_1,q_2,…,q_N}$以及观测集合$V={v_1,v_2,…,v_M}$。其中$N$和$M$分别是可能的状态数和观测数。</p>
 <p>​    $I$是长度为$T$的状态序列$I=(i_1,i_2,…i_T)$，$O$是对应的观测序列$O=(o_1,o_2,…,o_T)$。</p>
 <p>​    $A$是状态转移矩阵，表示由一个状态转移到另一个状态的概率。<br>$$<br>A_{ij}=P(i_{t+1}=q_j|i_t=q_{t+1})<br>$$<br>​    $B$是观测矩阵，也被称作发射矩阵,表示由一个状态生成一个观测对应的概率：<br>$$<br>B_{jk}=P(o_t=v_k|i_t=q_j)<br>$$<br>​    $\pi$为初始状态向量，$\pi_i=P(i_1=q_i)$。</p>
-<p>​    一个HMM模型由上述三者构成，<br>$$<br>\lambda = (A,B,\pi)<br>$$<br>​    HMM模型是一个生成式模型(Generative Model)，<strong>目的是生成状态序列$I$和观测序列$O$的联合分布$f(O,I)$。</strong></p>
+<p>​    一个HMM模型由上述三者构成，<br>$$<br>\lambda = (A,B,\pi)<br>$$<br>​<img src="HMM.jpg" alt></p>
+<p>​    HMM模型是一个生成式模型(Generative Model)，<strong>目的是生成状态序列$I$和观测序列$O$的联合分布$f(O,I)$。</strong></p>
 <p>​    HMM存在三个基本问题：</p>
 <ul>
 <li>计算概率，给定<strong>观测序列</strong>$O$和模型$\lambda$的情况下，计算概率$P(O|\lambda)$。</li>
@@ -482,11 +485,21 @@
 <li>预测，也成为解码。已知模型和观测序列，求条件概率$P(I|O)$最大的状态序列。</li>
 </ul>
 <h2 id="计算概率"><a href="#计算概率" class="headerlink" title="计算概率"></a>计算概率</h2><p>​    给定模型$\lambda=(A,B,\pi)$和观测序列$O=(o_1,o_2,…,o_T)$，计算观测序列$O$出现的概率$P(O|\lambda)$。</p>
-<h3 id="1、直接计算法"><a href="#1、直接计算法" class="headerlink" title="1、直接计算法"></a>1、直接计算法</h3><pre><code>通过概率公式直接计算，列举出所有可能的长度为T的状态序列$I=(i_1,i_2,...,i_T)$，求各个状态序列$I$与观测序列$O$的联合概率$P(O,I|\lambda)$，然后对所有的状态序列求和，最后得到$P(O|\lambda)$。</code></pre><p>​    状态序列$I=(i_1,i_2,…,i_T)$的概率是<br>$$<br>P(I|\lambda)=\pi_{i_i}A_{i_1i_2}…A_{i_{T-1}i_T}<br>$$<br>​    对于固定的状态序列$I=(i_1,i_2,…,i_T)$，观测序列$O=(o_1,o_2,…,o_T)的概率为：<br>$$<br>P(O|I,\lambda) = b_{i_1o_1}b_{i_2o_2}…b_{i_To_T}<br>$$<br>​    联合概率为：<br>$$<br>P(O,I|\lambda)=P(O|I,\lambda)P(I|\lambda)<br>$$<br>​    对所有的状态序列$I$求和<br>$$<br>P(O|\lambda)=\sum_{I}P(O,I|\lambda)P(I|\lambda)<br>$$<br>​    虽然上述计算在理论上可行，但实际上计算复杂度为$O(TN^T)$级别的。</p>
+<h3 id="1、直接计算法"><a href="#1、直接计算法" class="headerlink" title="1、直接计算法"></a>1、直接计算法</h3><p>​    通过概率公式直接计算，列举出所有可能的长度为T的状态序列$I=(i_1,i_2,…,i_T)$，求各个状态序列$I$与观测序列$O$的联合概率$P(O,I|\lambda)$，然后对所有的状态序列求和，最后得到$P(O|\lambda)$。</p>
+<p>​    状态序列$I=(i_1,i_2,…,i_T)$的概率是<br>$$<br>P(I|\lambda)=\pi_{i_i}A_{i_1i_2}…A_{i_{T-1}i_T}<br>$$<br>​    对于固定的状态序列$I=(i_1,i_2,…,i_T)$，观测序列$O=(o_1,o_2,…,o_T)的概率为：<br>$$<br>P(O|I,\lambda) = b_{i_1o_1}b_{i_2o_2}…b_{i_To_T}<br>$$<br>​    联合概率为：<br>$$<br>P(O,I|\lambda)=P(O|I,\lambda)P(I|\lambda)<br>$$<br>​    对所有的状态序列$I$求和<br>$$<br>P(O|\lambda)=\sum_{I}P(O,I|\lambda)P(I|\lambda)<br>$$<br>​    虽然上述计算在理论上可行，但实际上计算复杂度为$O(TN^T)$级别的。</p>
 <h3 id="2、前向算法"><a href="#2、前向算法" class="headerlink" title="2、前向算法"></a>2、前向算法</h3><p>​    定义到$t$时刻部分观测序列为$o_1,o_2,…,o_t$且状态为$q_i$的概率为前向概率<br>$$<br>\alpha_t(i)=P(o_1,o_2,…,o_t,q_i|\lambda)<br>$$<br>​    可以递推地求得前向概率$\alpha_t{i}$以及观测概率$P(O|\lambda)$。</p>
 <p>算法：</p>
-<p>（1）初始值<br>$$<br>\alpha_1(i)=\pi_ib_{io_1}<br>$$<br>（2）递推<br>$$<br>\alpha_{t+1}(i)=[\sum_{j=1}^N\alpha_t(j)A_{j,i}]b_{io_{t+1}}<br>$$<br>（3）终止<br>$$<br>P(O|\lambda)=\sum_{i=1}^N\alpha_T(i)<br>$$<br>使用此种方法进行计算时，每一步通过使用上一步得到的$N$个概率值，计算当前步的$N$个概率，复杂度降低到了$O(N^2T)$。</p>
-<h3 id="3、后向算法（其实只是变成了由后往前递推）"><a href="#3、后向算法（其实只是变成了由后往前递推）" class="headerlink" title="3、后向算法（其实只是变成了由后往前递推）"></a>3、后向算法（其实只是变成了由后往前递推）</h3><p>定义后向概率为:<br>$$<br>\beta_t(i)=P(o_{t+1},o_{t+2},…,o_{T}|i_t=q_i,\lambda)<br>$$<br>算法：<br>$$<br>\beta_T(i)=1\<br>\beta_t(i)=\sum_{j=1}^NA_{ij}b_{jo_{t+1}}\beta_{t+1}(j)\<br>P(O|\lambda)=\sum_{i=1}^N\pi_ib_{io_1}\beta_1(i)<br>$$</p>
+<p>（1）初始值<br>$$<br>\alpha_1(i)=\pi_ib_{io_1}<br>$$<br>（2）递推<br>$$<br>\alpha_{t+1}(i)=[\sum_{j=1}^N\alpha_t(j)A_{j,i}]b_{io_{t+1}}<br>$$<br>（3）终止<br>$$<br>P(O|\lambda)=\sum_{i=1}^N\alpha_T(i)<br>$$<br>​    使用此种方法进行计算时，每一步通过使用上一步得到的$N$个概率值，计算当前步的$N$个概率，复杂度降低到了$O(N^2T)$。</p>
+<h3 id="3、后向算法（其实只是变成了由后往前递推）"><a href="#3、后向算法（其实只是变成了由后往前递推）" class="headerlink" title="3、后向算法（其实只是变成了由后往前递推）"></a>3、后向算法（其实只是变成了由后往前递推）</h3><p>​    定义后向概率为:<br>$$<br>\beta_t(i)=P(o_{t+1},o_{t+2},…,o_{T}|i_t=q_i,\lambda)<br>$$<br>​    算法：<br>$$<br>\beta_T(i)=1\<br>\beta_t(i)=\sum_{j=1}^NA_{ij}b_{jo_{t+1}}\beta_{t+1}(j)\<br>P(O|\lambda)=\sum_{i=1}^N\pi_ib_{io_1}\beta_1(i)<br>$$</p>
+<h3 id="4、-一些概率和期望值的计算"><a href="#4、-一些概率和期望值的计算" class="headerlink" title="4、 一些概率和期望值的计算"></a>4、 一些概率和期望值的计算</h3><p>​    通过使用前项概率和后向概率可以有效地得到一些概率计算公式。<br>$$<br>\gamma_t(i)=P(i_t=q_i|O,\lambda)=\frac{\alpha_t(i)\beta_t(i)}{P(O|\lambda)}\<br>\xi_t(i,j)=P(i_t=q_i,i_{t+1}=q_j|O,\lambda)=\frac{\alpha_t(i)A_{ij}b_{jo_{t+1}}\beta_{t+1}(j)}{\sum_{i=1}^N\sum_{j=1}^NP(i_t=q_i,i_{t+1}=q_j|O,\lambda)}<br>$$</p>
+<h2 id="学习算法"><a href="#学习算法" class="headerlink" title="学习算法"></a>学习算法</h2><h3 id="1、有监督"><a href="#1、有监督" class="headerlink" title="1、有监督"></a>1、有监督</h3><p>​    统计频次计算概率转移矩阵$A$与概率发射矩阵$B$即可。</p>
+<h3 id="2、无监督-EM"><a href="#2、无监督-EM" class="headerlink" title="2、无监督(EM)"></a>2、无监督(EM)</h3><p>​    如果训练数据中只包含$S$个长度为$T$的观测序列，那么此时HMM转变为了一个含有隐变量的概率模型<br>$$<br>P(O|\lambda)=\sum_IP(O,I|\lambda)P(I|\lambda)<br>$$<br>​    而隐变量模型的学习可以通过EM算法来实现。</p>
+<p>略</p>
+<h2 id="预测算法"><a href="#预测算法" class="headerlink" title="预测算法"></a>预测算法</h2><h3 id="1、近似算法"><a href="#1、近似算法" class="headerlink" title="1、近似算法"></a>1、近似算法</h3><p>​    即贪心算法，在每个时间步<strong>均选择当前步最有可能出现的状态$i^*_t$</strong>，从而得到一个装态序列，并将其作为预测结果。<br>$$<br>i_t^*=arg\max_{N\geq i \geq 1}[\gamma_t(i)]<br>$$</p>
+<h3 id="2、维特比算法-Viterbi"><a href="#2、维特比算法-Viterbi" class="headerlink" title="2、维特比算法 Viterbi"></a>2、维特比算法 Viterbi</h3><p>​    viterbi算法的本质属于动态优化，在每个时间步，计算所有由上一步各节点保留的最佳路径到该时间步各节点的路径，并且每个节点均只保留最佳的路径并记录该节点。直到到达最终的节点，选择概率最高的节点倒回去将该路径的节点集合最为最优解。</p>
+<p>​    定义变量：</p>
+<p>​    在时刻$t$状态为$i$的所有单个路径中概率最大值$\delta_t(i)$<br>$$<br>\delta_t(i)=\max_{i_1,i_2,…,i_{t-1}}P(i_t=i,i_{t-1},…,i_1,o_t,…,o_1|\lambda)\<br>\delta_{t+1}(i)=\max_{N\geq j\geq 1}[\delta_t(j)A_{ij}]b_{io_{t+1}}<br>$$<br>​    在时刻$t$状态为$i$的所有单个路径中概率最大的路径的第$t-1$个结点为<br>$$<br>\psi_t(i)=arg \max_{N\geq j\geq 1}[\delta_{t-1}(j)A_{ij}]<br>$$<br>维特比算法</p>
+<p>1、初始化<br>$$<br>\delta_1(i)=\pi_ib_{io_1}\<br>\psi_1(i)=0<br>$$<br>2、递推<br>$$<br>\delta_{t+1}(i)=\max_{N\geq j\geq 1}[\delta_t(j)A_{ij}]b_{io_{t+1}}\<br>\psi_t(i)=arg \max_{N\geq j\geq 1}[\delta_{t-1}(j)A_{ij}]<br>$$<br>3、终止<br>$$<br>P^<em>=\max_{N \geq i \geq 1}\delta_T(i)\<br>i^</em><em>T=arg\max</em>{N \geq i \geq 1}[\delta_T(i)]<br>$$<br>4、回溯<br>$$<br>i^<em><em>t = \psi</em>{t+1}(i^</em>_{t+1})<br>$$<br>最终得到最优路径$i^<em>=(i^</em>_1,i^<em>_2,…,i^</em>_T)$。</p>
 
       
     </div>
@@ -758,7 +771,7 @@
             
 
             
-              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算概率"><span class="nav-number">2.</span> <span class="nav-text">计算概率</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、直接计算法"><span class="nav-number">2.1.</span> <span class="nav-text">1、直接计算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、前向算法"><span class="nav-number">2.2.</span> <span class="nav-text">2、前向算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、后向算法（其实只是变成了由后往前递推）"><span class="nav-number">2.3.</span> <span class="nav-text">3、后向算法（其实只是变成了由后往前递推）</span></a></li></ol></li></ol></div>
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#介绍"><span class="nav-number">1.</span> <span class="nav-text">介绍</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#计算概率"><span class="nav-number">2.</span> <span class="nav-text">计算概率</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、直接计算法"><span class="nav-number">2.1.</span> <span class="nav-text">1、直接计算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、前向算法"><span class="nav-number">2.2.</span> <span class="nav-text">2、前向算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3、后向算法（其实只是变成了由后往前递推）"><span class="nav-number">2.3.</span> <span class="nav-text">3、后向算法（其实只是变成了由后往前递推）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#4、-一些概率和期望值的计算"><span class="nav-number">2.4.</span> <span class="nav-text">4、 一些概率和期望值的计算</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#学习算法"><span class="nav-number">3.</span> <span class="nav-text">学习算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、有监督"><span class="nav-number">3.1.</span> <span class="nav-text">1、有监督</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、无监督-EM"><span class="nav-number">3.2.</span> <span class="nav-text">2、无监督(EM)</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#预测算法"><span class="nav-number">4.</span> <span class="nav-text">预测算法</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1、近似算法"><span class="nav-number">4.1.</span> <span class="nav-text">1、近似算法</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2、维特比算法-Viterbi"><span class="nav-number">4.2.</span> <span class="nav-text">2、维特比算法 Viterbi</span></a></li></ol></li></ol></div>
             
 
           </div>
@@ -810,7 +823,7 @@
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共6.7k字</span>
+  <span class="post-count">博客全站共7.3k字</span>
 </div>
         
 <div class="busuanzi-count">
