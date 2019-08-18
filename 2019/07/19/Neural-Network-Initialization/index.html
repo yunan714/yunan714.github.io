@@ -512,35 +512,18 @@
 <p><img src="gauss_tanh_1.png" alt></p>
 <p>实现代码：</p>
 <figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> tensorflow <span class="keyword">as</span> tf</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">%matplotlib inline</span><br><span class="line"></span><br><span class="line">graph = tf.Graph()</span><br><span class="line"><span class="keyword">with</span> graph.as_default():</span><br><span class="line">    data = tf.constant(np.random.randn(<span class="number">2000</span>, <span class="number">800</span>).astype(<span class="string">'float32'</span>))</span><br><span class="line">    layer_sizes = [<span class="number">800</span> - <span class="number">50</span> * i <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>,<span class="number">10</span>)]</span><br><span class="line">    num_layers = len(layer_sizes)</span><br><span class="line"></span><br><span class="line">    fcs = []</span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> range(<span class="number">0</span>, num_layers - <span class="number">1</span>):</span><br><span class="line">        X = data <span class="keyword">if</span> i == <span class="number">0</span> <span class="keyword">else</span> fcs[i - <span class="number">1</span>]</span><br><span class="line">        node_in = layer_sizes[i]</span><br><span class="line">        node_out = layer_sizes[i + <span class="number">1</span>]</span><br><span class="line">        W = tf.Variable(np.random.randn(node_in, node_out).astype(<span class="string">'float32'</span>))/np.sqrt(node_in)</span><br><span class="line">        <span class="comment">#W = tf.Variable(np.random.randn(node_in, node_out).astype('float32'))# * 0.01 </span></span><br><span class="line">       <span class="comment"># W = tf.Variable(np.random.randn(node_in, node_out).astype('float32'))</span></span><br><span class="line">        fc = tf.matmul(X, W)</span><br><span class="line"><span class="comment">#         fc = tf.contrib.layers.batch_norm(fc, center=True, scale=True,</span></span><br><span class="line"><span class="comment">#                                       is_training=True)</span></span><br><span class="line">        fc = tf.nn.tanh(fc)</span><br><span class="line">        fcs.append(fc)</span><br><span class="line">    </span><br><span class="line"><span class="keyword">with</span> tf.Session(graph=graph) <span class="keyword">as</span> sess:</span><br><span class="line">    sess.run(tf.global_variables_initializer())</span><br><span class="line">  </span><br><span class="line">    print(<span class="string">'input mean &#123;0:.5f&#125; and std &#123;1:.5f&#125;'</span>.format(np.mean(data.eval()),</span><br><span class="line">                                          np.std(data.eval())))</span><br><span class="line">    <span class="keyword">for</span> idx, fc <span class="keyword">in</span> enumerate(fcs):</span><br><span class="line">        print(<span class="string">'layer &#123;0&#125; mean &#123;1:.5f&#125; and std &#123;2:.5f&#125;'</span>.format(idx+<span class="number">1</span>, np.mean(fc.eval()),</span><br><span class="line">                                               np.std(fc.eval())))</span><br><span class="line">  </span><br><span class="line">    plt.figure(figsize=(<span class="number">18</span>,<span class="number">6</span>))</span><br><span class="line">    <span class="keyword">for</span> idx, fc <span class="keyword">in</span> enumerate(fcs):</span><br><span class="line">        plt.subplot(<span class="number">1</span>, len(fcs), idx+<span class="number">1</span>)</span><br><span class="line">        plt.hist(fc.eval().flatten(), <span class="number">30</span>, range=[<span class="number">-1</span>,<span class="number">1</span>])</span><br></pre></td></tr></table></figure>
+
 <p>随着层数的增加，很明显可以查看出输出值迅速向0靠拢，后面的层输出几乎全是0，通过反向传播得到的梯度也就变成了0，使得神经网络难以继续优化下去。</p>
 <p>反之，若是我们将方差调大，变成1，输出如下：</p>
 <p><img src="gauss_tanh_2.png" alt></p>
 <p>为了解决这个问题，Glorot和Bengio在2010提出了Xavier初始化方法。</p>
 <h3 id="Xavier-Initialization"><a href="#Xavier-Initialization" class="headerlink" title="Xavier Initialization"></a>Xavier Initialization</h3><p>对于神经网络，我们希望他的输入空间和输出空间是同一个分布（一般用方差来衡量）。如果输入空间过于稀疏而输出空间过于稠密，那么通过反向传播得到的损失函数所返回的梯度就会变得很小使得网络难以训练；反之则会导致梯度爆炸。</p>
-<p>在神经网络中层与层之间的传递主要是线性组合的形式：</p>
-<script type="math/tex; mode=display">
-Z = \sum_{i=1}^{n}w_ix_i \tag{1.1}</script><p>方差</p>
-<script type="math/tex; mode=display">
-Var(w_ix_i)=Var(w_i)Var(x_i)+E^2(w_i)Var(x_i)+E^2(x_i)Var(w_i)\tag{1.2}</script><hr>
+<p>在神经网络中层与层之间的传递主要是线性组合的形式：<br>$$<br>Z = \sum_{i=1}^{n}w_ix_i \tag{1.1}<br>$$<br>方差<br>$$<br>Var(w_ix_i)=Var(w_i)Var(x_i)+E^2(w_i)Var(x_i)+E^2(x_i)Var(w_i)\tag{1.2}<br>$$</p>
+<hr>
 <p><strong>推导</strong></p>
-<p>已知$Var(x)=E(x^2)-E^2(x)$</p>
-<script type="math/tex; mode=display">
-Var(xy)=E(x^2y^2)-E^2(xy)</script><p>由于$x$与$y$相互独立</p>
-<script type="math/tex; mode=display">
-\begin{split}Var(xy)&=E(x^2)E(y^2)-E^2(x)E^2(y)\\
-&=(Var(x)+E^2(x))(Var(y)+E^2(y))-E^2(x)E^2(y)\\
-&=Var(x)Var(y)+E^2(x)Var(y)+E^2(y)Var(x)\end{split}</script><hr>
-<p>通过假定$E(w_i)$与$E(x_i)$均为0（这个可以通过batch normalization对每一层重新调整分布做到，事实上影响不大），我们有</p>
-<script type="math/tex; mode=display">
-Var(w_ix_i)=Var(w_i)Var(x_i)\tag{1.3}</script><p><strong>因为假定$w_i与x_i$均服从独立同分布假设（所有机器学习的通用假设）</strong>，$Var(x_i)=Var(x)$，最终：</p>
-<script type="math/tex; mode=display">
-Var(z)=nVar(x)Var(w)\tag{1.4}</script><p>要保持输入$x$与输出的$z$方差不变，使$w$得方差为1即可。从正向和反向两个角度来看，$n_{in}$与$n_{out}$是不同的，此处对其取平均值，得到$w$方差表达式：</p>
-<script type="math/tex; mode=display">
-Var(w)=\frac{2}{n_{in}+n_{out}}\tag{1.5}</script><p><strong>假定$w$为均匀分布</strong>，均匀分布对应的方差为</p>
-<script type="math/tex; mode=display">
-var(w)=\frac{(a-b)^2}{12}\tag{1.6}</script><p>推出$w$的分布为:</p>
-<script type="math/tex; mode=display">
-w\sim U[-\sqrt{\frac{6}{n_{in}+n_{out}}},\sqrt{\frac{6}{n_{in}+n_{out}}}]\tag{1.7}</script><p>这便是Xavier初始化方法。</p>
+<p>已知$Var(x)=E(x^2)-E^2(x)$<br>$$<br>Var(xy)=E(x^2y^2)-E^2(xy)<br>$$<br>由于$x$与$y$相互独立<br>$$<br>\begin{split}Var(xy)&amp;=E(x^2)E(y^2)-E^2(x)E^2(y)\<br>&amp;=(Var(x)+E^2(x))(Var(y)+E^2(y))-E^2(x)E^2(y)\<br>&amp;=Var(x)Var(y)+E^2(x)Var(y)+E^2(y)Var(x)\end{split}<br>$$</p>
+<hr>
+<p>通过假定$E(w_i)$与$E(x_i)$均为0（这个可以通过batch normalization对每一层重新调整分布做到，事实上影响不大），我们有<br>$$<br>Var(w_ix_i)=Var(w_i)Var(x_i)\tag{1.3}<br>$$<br><strong>因为假定$w_i与x_i$均服从独立同分布假设（所有机器学习的通用假设）</strong>，$Var(x_i)=Var(x)$，最终：<br>$$<br>Var(z)=nVar(x)Var(w)\tag{1.4}<br>$$<br>要保持输入$x$与输出的$z$方差不变，使$w$得方差为1即可。从正向和反向两个角度来看，$n_{in}$与$n_{out}$是不同的，此处对其取平均值，得到$w$方差表达式：<br>$$<br>Var(w)=\frac{2}{n_{in}+n_{out}}\tag{1.5}<br>$$<br><strong>假定$w$为均匀分布</strong>，均匀分布对应的方差为<br>$$<br>var(w)=\frac{(a-b)^2}{12}\tag{1.6}<br>$$<br>推出$w$的分布为:<br>$$<br>w\sim U[-\sqrt{\frac{6}{n_{in}+n_{out}}},\sqrt{\frac{6}{n_{in}+n_{out}}}]\tag{1.7}<br>$$<br>这便是Xavier初始化方法。</p>
 <p>同样，我们使用代码对其进行验证：</p>
 <p><img src="Xavier_tanh.png" alt></p>
 <p>可以看出效果非常的好，即使是在第十层也维持了良好的分布。</p>
@@ -548,22 +531,11 @@ w\sim U[-\sqrt{\frac{6}{n_{in}+n_{out}}},\sqrt{\frac{6}{n_{in}+n_{out}}}]\tag{1.
 <p><img src="Xavier_relu.png" alt></p>
 <p>果然，一开始效果还可以，后来就基本全部接近于0了。</p>
 <p>为了解决Relu激活函数的初始化问题，Kaiming He大佬与2015年提出了一种新的初始化方法，可以帮助激活函数为Relu的神经网络获得良好的初始化，称之为He初始化。</p>
-<h3 id="He-Initialization"><a href="#He-Initialization" class="headerlink" title="He Initialization"></a>He Initialization</h3><p>该初始化方法主要是针对卷积网络做的分析，首先对于卷积网络的每一层，我们有:</p>
-<script type="math/tex; mode=display">
-y_l = w_l x_l + b_l\tag{2.1}</script><p>$x_l$的维度为$k^2c\times1$，表示图像中一块$k\times k$并且包含$c$个通道的区域，即卷积操作时对应的输入区域，我们为方便后面的表达令$n=k^2c$；$w_l$的维度为$n\times d$，表示为$d$个卷积核；最后得到对应一个pixel位置上的$d$个通道的值就是$y_l \in \mathcal{R}^{d\times 1}$。同时对于整个网络来说，$c_l=d_{l-1}$。</p>
-<p>对上式求方差，假定$w_l$与$x_l$相互独立且两者均独立同分布：</p>
-<script type="math/tex; mode=display">
-Var(y_l)=n_lVar(w_lx_l)\tag{2.2}</script><p>假定$w_l$是zero-mean，原因见上一节，公式推导也见上一节。</p>
-<script type="math/tex; mode=display">
-Var(y_l)=n_lVar(w_l)E(x_l^2)\tag{2.3}</script><p>由于RELU激活函数的性质，$x_l=max(0,y_{l-1})$，因此$E(x_l^2)\neq Var(x_l)$，假定我们使得$w_l$是一个关于0对称的分布，同时$y_l$也是一个关于0对称的分布，这会导致</p>
-<script type="math/tex; mode=display">
-E(x_l^2)=\frac{1}{2}Var(y_{l-1})\tag{2.4}</script><p>$y_{l-1}$作为上一层的输出，在通过激活层RELU函数时，由于$y_l$关于0对称，一半的信息直接变为0，因此缩小为原来的$\frac{1}{2}$。</p>
-<p>将2.4式代入2.3式中:</p>
-<script type="math/tex; mode=display">
-\begin{split}Var\left[y_{l}\right]&=\frac{1}{2} n_{l} Var\left[w_{l}\right] Var\left[y_{l-1}\right]\end{split}\tag{2.5}</script><script type="math/tex; mode=display">
-\operatorname{Var}\left[y_{L}\right]=\operatorname{Var}\left[y_{1}\right]\left(\prod_{l=2}^{L} \frac{1}{2} n_{l} \operatorname{Var}\left[w_{l}\right]\right)\tag{2.6}</script><p>为了维持输入输出在同一个分布上，便需要满足</p>
-<script type="math/tex; mode=display">
-\frac{1}{2} n_{l} \operatorname{Var}\left[w_{l}\right]=1, \quad \forall l\tag{2.7}</script><p>因此直接每一层按照$w_l \sim \mathcal{N}(0,\sqrt{2/n_l})$的分布随机初始化即可。</p>
+<h3 id="He-Initialization"><a href="#He-Initialization" class="headerlink" title="He Initialization"></a>He Initialization</h3><p>该初始化方法主要是针对卷积网络做的分析，首先对于卷积网络的每一层，我们有:<br>$$<br>y_l = w_l x_l + b_l\tag{2.1}<br>$$<br>$x_l$的维度为$k^2c\times1$，表示图像中一块$k\times k$并且包含$c$个通道的区域，即卷积操作时对应的输入区域，我们为方便后面的表达令$n=k^2c$；$w_l$的维度为$n\times d$，表示为$d$个卷积核；最后得到对应一个pixel位置上的$d$个通道的值就是$y_l \in \mathcal{R}^{d\times 1}$。同时对于整个网络来说，$c_l=d_{l-1}$。</p>
+<p>对上式求方差，假定$w_l$与$x_l$相互独立且两者均独立同分布：<br>$$<br>Var(y_l)=n_lVar(w_lx_l)\tag{2.2}<br>$$<br>假定$w_l$是zero-mean，原因见上一节，公式推导也见上一节。<br>$$<br>Var(y_l)=n_lVar(w_l)E(x_l^2)\tag{2.3}<br>$$<br>由于RELU激活函数的性质，$x_l=max(0,y_{l-1})$，因此$E(x_l^2)\neq Var(x_l)$，假定我们使得$w_l$是一个关于0对称的分布，同时$y_l$也是一个关于0对称的分布，这会导致<br>$$<br>E(x_l^2)=\frac{1}{2}Var(y_{l-1})\tag{2.4}<br>$$<br>$y_{l-1}$作为上一层的输出，在通过激活层RELU函数时，由于$y_l$关于0对称，一半的信息直接变为0，因此缩小为原来的$\frac{1}{2}$。</p>
+<p>将2.4式代入2.3式中:<br>$$<br>\begin{split}Var\left[y_{l}\right]&amp;=\frac{1}{2} n_{l} Var\left[w_{l}\right] Var\left[y_{l-1}\right]\end{split}\tag{2.5}<br>$$</p>
+<p>$$<br>\operatorname{Var}\left[y_{L}\right]=\operatorname{Var}\left[y_{1}\right]\left(\prod_{l=2}^{L} \frac{1}{2} n_{l} \operatorname{Var}\left[w_{l}\right]\right)\tag{2.6}<br>$$</p>
+<p>为了维持输入输出在同一个分布上，便需要满足<br>$$<br>\frac{1}{2} n_{l} \operatorname{Var}\left[w_{l}\right]=1, \quad \forall l\tag{2.7}<br>$$<br>因此直接每一层按照$w_l \sim \mathcal{N}(0,\sqrt{2/n_l})$的分布随机初始化即可。</p>
 <p>同理，反向传播时<br><img src="formula.png" alt><br>最终得到的结论是一致的。唯一需要注意的是对于第一层，由于没有RELU激活函数，方差并不会变成一半，需要单独拿出来进行初始化。还有对于通过前向和反向推出的两个结果来说，使用任意一种均可，都可以使其收敛，套用原文中的一句话“如果初始化适当的缩放了反向传播的信号，那么这种缩放也会体现在正向传播上，反之亦然。”</p>
 <p>再次通过代码验证效果：</p>
 <p><img src="He_relu.png" alt></p>
@@ -642,6 +614,10 @@ E(x_l^2)=\frac{1}{2}Var(y_{l-1})\tag{2.4}</script><p>$y_{l-1}$作为上一层的
 
           <div class="post-nav-prev post-nav-item">
             
+              <a href="/2019/07/23/使用Pytorch实现Pointer-Generator/" rel="prev" title="使用Pytorch实现Pointer-Generator">
+                使用Pytorch实现Pointer-Generator <i class="fa fa-chevron-right"></i>
+              </a>
+            
           </div>
         </div>
       
@@ -710,7 +686,7 @@ E(x_l^2)=\frac{1}{2}Var(y_{l-1})\tag{2.4}</script><p>$y_{l-1}$作为上一层的
         
           <a href="/archives/">
         
-          <span class="site-state-item-count">4</span>
+          <span class="site-state-item-count">10</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -733,7 +709,9 @@ E(x_l^2)=\frac{1}{2}Var(y_{l-1})\tag{2.4}</script><p>$y_{l-1}$作为上一层的
         
           
         
-        <span class="site-state-item-count">3</span>
+          
+        
+        <span class="site-state-item-count">4</span>
         <span class="site-state-item-name">分类</span>
         </a>
       </div>
@@ -764,7 +742,27 @@ E(x_l^2)=\frac{1}{2}Var(y_{l-1})\tag{2.4}</script><p>$y_{l-1}$作为上一层的
         
           
         
-        <span class="site-state-item-count">7</span>
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+          
+        
+        <span class="site-state-item-count">17</span>
         <span class="site-state-item-name">标签</span>
         </a>
       </div>
@@ -877,7 +875,7 @@ E(x_l^2)=\frac{1}{2}Var(y_{l-1})\tag{2.4}</script><p>$y_{l-1}$作为上一层的
 
 <div class="theme-info">
   <div class="powered-by"></div>
-  <span class="post-count">博客全站共4.1k字</span>
+  <span class="post-count">博客全站共6.7k字</span>
 </div>
         
 <div class="busuanzi-count">
